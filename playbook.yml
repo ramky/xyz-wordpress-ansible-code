@@ -22,15 +22,16 @@
     - vars/default.yml
   roles:
     - mysql_server
-# - hosts: appserver
-#   become: true
-#   vars_files:
-#     - vars/default.yml
-#   vars:
-#     # Passing the host to app server used to connect in wordpress to mysql server
-#     app_host: "{{ hostvars[groups['dbserver'][0]]['mysql_host'].stdout }}"
-#   roles:
-#     - mysql
-#     - apache
-#     - php
-#     - wordpress
+
+- hosts: appserver
+  become: true
+  vars_files:
+    - vars/default.yml
+  vars:
+    # Passing the host to app server used to connect in wordpress to mysql server
+    mysql_host: "{{ hostvars[groups['dbserver'][0]]['mysql_host'].stdout }}"
+  roles:
+    - mysql
+    - apache
+    - php
+    - wordpress
